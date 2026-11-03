@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CBT Ulangan Harian Ekonomi - MA Jamiat Kheir</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Poppins',system-ui,sans-serif;min-height:100vh;color:#1f2937;user-select:none;-webkit-user-select:none;background:linear-gradient(160deg,#022c22 0%,#065f46 55%,#047857 100%) fixed}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cg fill='none' stroke='%23d4af37' stroke-width='1' opacity='.2'%3E%3Crect x='15' y='15' width='30' height='30'/%3E%3Crect x='15' y='15' width='30' height='30' transform='rotate(45 30 30)'/%3E%3C/g%3E%3C/svg%3E")}
+#app,#modal{position:relative;z-index:1}#modal{position:fixed;z-index:50}
+input,textarea,select{user-select:text;-webkit-user-select:text}
+.ar{font-family:'Amiri',serif}
+.frame{position:relative;background:#fffdf5;border:2px solid #c9a227;border-radius:16px;outline:1px solid rgba(212,175,55,.6);outline-offset:4px;box-shadow:0 12px 35px rgba(0,0,0,.35)}
+.frame::before,.frame::after{content:"❖";position:absolute;color:#c9a227;font-size:14px;line-height:1;background:#fffdf5;padding:0 3px}
+.frame::before{top:-9px;left:18px}.frame::after{bottom:-9px;right:18px}
+.btn-gold{background:linear-gradient(135deg,#f3d36b,#c9a227);color:#064e3b;font-weight:600}
+.btn-green{background:linear-gradient(135deg,#10b981,#047857);color:#fff;font-weight:600}
+.bar{background:linear-gradient(90deg,#022c22,#047857);border-bottom:3px solid #d4af37}
+.inp{width:100%;border:1.5px solid #e5d9a8;border-radius:10px;padding:8px 10px;background:#fff}
+.inp:focus{outline:2px solid #10b981}
+</style></head>
+<body>
+<div id="app"></div>
+<div id="modal" class="hidden inset-0 bg-black/60 flex items-center justify-center p-4"><div id="mbox" class="frame p-6 max-w-md w-full"></div></div>
+<script>
+const API='PASTE_URL_WEB_APP_DI_SINI';
+const LOGO='data:image/jpeg;base64,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';
+const CFG={judul:'Ulangan Harian',mapel:'Ekonomi',sekolah:'MA Jamiat Kheir',kelas:'Kelas 10 / Fase E',durasi:120,maxViol:3};
+const L='ABCDE',SK='cbt_state_v2';
+const $=s=>document.querySelector(s);
+const ld=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}};
+const sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const norm=s=>String(s==null?'':s).toLowerCase().replace(/[^a-z0-9]/g,'');
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let S=null,Q=[],AD=null,PW='',timer=null,navOpen=false;
+const logo=s=>`<img src="${LOGO}" alt="Logo" class="rounded-full object-cover shrink-0" style="width:${s}px;height:${s}px;border:2px solid #d4af37;box-shadow:0 2px 8px rgba(0,0,0,.35)">`;
+const sec=q=>q.t==='pg'?'Pilihan Ganda':q.t==='is'?'Isian Singkat':'Benar / Salah';
+async function call(a,d){
+ try{
+  if(!/^https:\/\/script\.google\.com\//.test(API))return {ok:false,msg:'Alamat Web App belum diisi di file HTML (baris const API).'};
+  const r=await fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({action:a},d||{}))});
+  return await r.json();
+ }catch(e){return {ok:false,msg:'Gagal terhubung ke server. Periksa internet dan pengaturan deploy Web App.'}}
+}
+function modal(h){$('#mbox').innerHTML=h;$('#modal').classList.remove('hidden');$('#modal').classList.add('flex')}
+function closeModal(){$('#modal').classList.add('hidden');$('#modal').classList.remove('flex')}
+function busy(b,id,t){const e=$(id);if(e){e.disabled=b;if(t)e.textContent=b?'Memproses...':t}}
+
+/* ===== LOGIN ===== */
+function loginView(tab){
+ tab=tab||'siswa';
+ $('#app').innerHTML=`<div class="max-w-md mx-auto pt-8 pb-8 px-4">
+ <div class="text-center text-white mb-5"><div class="flex justify-center mb-3">${logo(104)}</div>
+ <div class="ar text-2xl" style="color:#f3d36b">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+ <h1 class="ar text-3xl font-bold mt-1">${esc(CFG.judul)} ${esc(CFG.mapel)}</h1>
+ <p class="text-sm opacity-90">${esc(CFG.sekolah)} · ${esc(CFG.kelas)}</p><p class="text-xs opacity-75">${CFG.durasi} menit</p></div>
+ <div class="frame p-5"><div class="flex mb-4 bg-emerald-50 rounded-lg p-1 text-sm">
+ <button onclick="loginView('siswa')" class="flex-1 py-2 rounded-md ${tab=='siswa'?'btn-green':''}">Siswa</button>
+ <button onclick="loginView('admin')" class="flex-1 py-2 rounded-md ${tab=='admin'?'btn-green':''}">Guru / Admin</button></div>
+ ${tab=='siswa'?`<label class="text-sm">Nama lengkap</label><input id="nm" class="inp mb-3" placeholder="Nama sesuai daftar">
+ <label class="text-sm">Token akses</label><input id="tk" class="inp mb-4" placeholder="Contoh: ECO001">
+ <button id="bt" onclick="loginSiswa()" class="w-full btn-gold rounded-lg py-2.5">Mulai Ujian</button>`
+ :`<label class="text-sm">Password admin</label><input id="pw" type="password" class="inp mb-4">
+ <button id="bt" onclick="loginAdmin()" class="w-full btn-green rounded-lg py-2.5">Masuk Dashboard</button>`}
+ <p id="err" class="text-red-600 text-sm mt-3"></p></div>
+ <p class="text-center text-xs text-white/70 mt-4">Dilarang berpindah tab/jendela. ${CFG.maxViol} pelanggaran = akun diblokir.</p></div>`;
+}
+async function loginSiswa(){
+ const n=$('#nm').value.trim(),t=$('#tk').value.trim().toUpperCase();
+ if(!n||!t){$('#err').textContent='Isi nama dan token.';return}
+ busy(true,'#bt','Mulai Ujian');$('#err').textContent='';
+ const d=await call('login',{nama:n,token:t});
+ if(!d.ok){busy(false,'#bt','Mulai Ujian');$('#err').textContent=d.msg||'Gagal masuk.';return}
+ const old=ld(SK,null),end=Date.now()+(d.end-d.now);
+ if(old&&norm(old.nama)===norm(d.nama)){S=old;S.viol=Math.max(old.viol||0,d.viol||0);S.end=end;S.soal=d.soal}
+ else S={nama:d.nama,kelas:d.kelas,token:t,soal:d.soal,ans:{},ragu:{},cur:0,viol:d.viol||0,end:end};
+ Q=S.soal;sv(SK,S);
+ if(S.viol>=CFG.maxViol){submit(false,true);return}
+ examView();
+}
+async function loginAdmin(){
+ PW=$('#pw').value;busy(true,'#bt','Masuk Dashboard');
+ const r=await call('aget',{pass:PW});
+ if(!r.ok){busy(false,'#bt','Masuk Dashboard');$('#err').textContent=r.msg||'Password salah.';return}
+ AD=r;adminView('rekap');
+}
+
+/* ===== UJIAN ===== */
+function examView(){
+ $('#app').innerHTML=`<header class="bar text-white px-3 py-2 flex items-center justify-between gap-2 sticky top-0 z-10">
+ <div class="flex items-center gap-2 min-w-0">${logo(38)}<div class="min-w-0"><div class="ar font-bold truncate">${esc(CFG.judul)} ${esc(CFG.mapel)}</div><div class="text-xs opacity-80 truncate">${esc(CFG.sekolah)} · ${esc(S.nama)}</div></div></div>
+ <div class="flex items-center gap-2"><span id="tm" class="bg-red-600 rounded-md px-2 py-1 font-mono text-sm">--:--:--</span>
+ <button onclick="navOpen=!navOpen;drawNav()" class="lg:hidden btn-gold rounded-md px-2 py-1 text-sm">Daftar</button></div></header>
+ <div class="max-w-6xl mx-auto p-3 grid lg:grid-cols-[1fr_290px] gap-4"><main id="main"></main><aside id="nav" class="hidden lg:block"></aside></div>`;
+ draw();tick();clearInterval(timer);timer=setInterval(tick,1000);
+}
+function tick(){
+ const r=Math.max(0,S.end-Date.now()),h=Math.floor(r/3600000),m=Math.floor(r%3600000/60000),s=Math.floor(r%60000/1000);
+ const e=$('#tm');if(e)e.textContent=[h,m,s].map(x=>String(x).padStart(2,'0')).join(':');
+ if(r<=0&&!S.done){clearInterval(timer);submit(true)}
+}
+function draw(){drawMain();drawNav()}
+function drawMain(){
+ const i=S.cur,q=Q[i],a=S.ans[i];let body='';
+ if(q.t==='pg')body=q.o.map((o,j)=>!o?'':`<button onclick="setA(${i},${j})" class="w-full text-left flex gap-3 p-3 mb-2 rounded-lg border-2 ${a===j?'border-emerald-600 bg-emerald-50':'border-amber-200 bg-white'}"><span class="font-bold w-5">${L[j]}.</span><span>${esc(o)}</span></button>`).join('');
+ else if(q.t==='bs')body=[[true,'Benar'],[false,'Salah']].map(([v,t])=>`<button onclick="setA(${i},${v})" class="w-full text-left p-3 mb-2 rounded-lg border-2 ${a===v?'border-emerald-600 bg-emerald-50':'border-amber-200 bg-white'}">${t}</button>`).join('');
+ else body=`<input value="${esc(a||'')}" oninput="setA(${i},this.value,1)" class="inp" style="padding:12px" placeholder="Ketik jawaban singkat di sini">`;
+ $('#main').innerHTML=`<div class="frame p-4">
+ <div class="flex justify-between items-center mb-3"><h2 class="ar text-xl font-bold text-emerald-800">Soal Nomor ${i+1}</h2><span class="text-xs bg-amber-100 text-amber-800 rounded px-2 py-1">${sec(q)} · bobot ${q.w||2}</span></div>
+ <p class="mb-4 leading-relaxed">${esc(q.q)}</p>${body}
+ <div class="flex gap-2 mt-4"><button onclick="go(${i-1})" ${i==0?'disabled':''} class="flex-1 py-2 rounded-lg bg-slate-300 disabled:opacity-40">Sebelumnya</button>
+ <button onclick="toggleRagu()" class="flex-1 py-2 rounded-lg ${S.ragu[i]?'bg-amber-600 text-white':'bg-amber-400'}">Ragu-ragu</button>
+ <button onclick="go(${i+1})" ${i==Q.length-1?'disabled':''} class="flex-1 py-2 rounded-lg btn-green disabled:opacity-40">Selanjutnya</button></div></div>`;
+}
+function drawNav(){
+ const n=$('#nav');if(!n)return;
+ n.className=(navOpen?'':'hidden ')+'lg:block';
+ let g='';for(let i=0;i<Q.length;i++){
+  const d=S.ans[i]!==undefined&&S.ans[i]!=='';
+  const c=S.ragu[i]?'bg-amber-400':d?'bg-emerald-600 text-white':'bg-slate-200';
+  g+=`<button onclick="go(${i});navOpen=false" class="h-9 rounded ${c} text-sm ${i===S.cur?'ring-2 ring-offset-1 ring-yellow-600':''}">${i+1}</button>`}
+ const done=Object.values(S.ans).filter(v=>v!==''&&v!==undefined).length;
+ n.innerHTML=`<div class="frame p-4"><h3 class="ar font-bold mb-2 text-emerald-800">Penjelajah soal (${done}/${Q.length})</h3>
+ <div class="grid grid-cols-6 lg:grid-cols-5 gap-1.5">${g}</div>
+ <div class="text-xs mt-3 text-slate-500">Abu: belum · Hijau: terjawab · Kuning: ragu</div>
+ <div class="text-xs mt-1 text-red-600 font-semibold">Pelanggaran: ${S.viol}/${CFG.maxViol}</div>
+ <button onclick="confirmSubmit()" class="w-full mt-3 py-2 rounded-lg btn-gold">Kirim &amp; Selesai</button></div>`;
+}
+function setA(i,v,noDraw){S.ans[i]=v;sv(SK,S);noDraw?drawNav():draw()}
+function go(i){if(i<0||i>=Q.length)return;S.cur=i;sv(SK,S);draw();window.scrollTo(0,0)}
+function toggleRagu(){S.ragu[S.cur]=!S.ragu[S.cur];sv(SK,S);draw()}
+function confirmSubmit(){
+ const done=Object.values(S.ans).filter(v=>v!==''&&v!==undefined).length,rg=Object.values(S.ragu).filter(Boolean).length;
+ modal(`<h3 class="ar font-bold text-xl mb-2 text-emerald-800">Kirim jawaban?</h3><p class="text-sm mb-4">Terjawab ${done} dari ${Q.length} soal. Ragu-ragu: ${rg}. Setelah dikirim, jawaban tidak bisa diubah.</p>
+ <div class="flex gap-2"><button onclick="closeModal()" class="flex-1 py-2 rounded-lg bg-slate-200">Kembali</button><button onclick="submit(false)" class="flex-1 py-2 rounded-lg btn-green">Ya, kirim</button></div>`);
+}
+async function submit(auto,blocked){
+ clearInterval(timer);S.done=true;
+ modal('<p class="text-center py-4">Mengirim jawaban...</p>');
+ const d=await call('submit',{nama:S.nama,token:S.token,ans:S.ans,viol:S.viol});
+ if(!d.ok){modal(`<h3 class="ar font-bold text-xl text-red-600 mb-2">Gagal mengirim</h3><p class="text-sm mb-4">${esc(d.msg||'Koneksi bermasalah.')} Jawabanmu aman di perangkat ini. Pastikan internet aktif lalu coba lagi.</p><button onclick="submit(${!!auto},${!!blocked})" class="w-full py-2 rounded-lg btn-green">Coba kirim lagi</button>`);return}
+ localStorage.removeItem(SK);
+ const nm=S.nama;
+ if(d.blocked){modal(`<h3 class="ar font-bold text-xl text-red-600 mb-2">Akun Diblokir</h3><p class="text-sm mb-4">Kamu melakukan ${CFG.maxViol} pelanggaran (keluar dari halaman ujian). Jawabanmu dikirim otomatis dan akunmu diblokir. Hubungi guru.</p><button onclick="closeModal();S=null;loginView()" class="w-full py-2 rounded-lg bg-red-600 text-white">Tutup</button>`);return}
+ modal(`<h3 class="ar font-bold text-xl text-emerald-800 mb-1">${auto?'Waktu habis, jawaban terkirim':'Jawaban terkirim'}</h3>
+ <p class="text-sm text-slate-500 mb-3">${esc(nm)}</p>
+ <div class="text-center bg-emerald-50 rounded-lg p-4 mb-3"><div class="text-4xl font-bold text-emerald-700">${d.nilai}</div><div class="text-sm">Benar ${d.benar} · Salah ${d.salah}</div></div>
+ <button onclick="closeModal();S=null;loginView()" class="w-full py-2 rounded-lg btn-green">Selesai</button>`);
+}
+
+/* ===== ADMIN ===== */
+function adminShell(tab,c){
+ const T=(k,t)=>`<button onclick="adminView('${k}')" class="px-3 py-2 rounded-lg text-sm whitespace-nowrap ${tab==k?'btn-gold':'bg-white/90'}">${t}</button>`;
+ $('#app').innerHTML=`<div class="max-w-5xl mx-auto p-3"><div class="flex items-center justify-between mb-3 text-white"><div class="flex items-center gap-3">${logo(46)}<div><div class="ar text-xl font-bold">Dashboard Guru</div><div class="text-xs opacity-80">${esc(CFG.sekolah)} · ${esc(CFG.mapel)}</div></div></div><div class="text-sm flex gap-3"><button onclick="refresh('${tab}')" class="underline">Muat ulang</button><button onclick="PW='';AD=null;loginView()" class="underline">Keluar</button></div></div>
+ <div class="flex gap-2 mb-4 overflow-x-auto pb-1">${T('rekap','Rekap nilai')}${T('pelanggaran','Pelanggaran')}${T('siswa','Akun siswa')}${T('soal','Kelola soal')}</div><div class="frame p-3">${c}</div></div>`;
+}
+const TH='bg-emerald-50 text-left text-emerald-900';
+async function refresh(tab){modal('<p class="text-center py-4">Memuat data...</p>');const r=await call('aget',{pass:PW});closeModal();if(!r.ok){alert(r.msg||'Gagal memuat data');return}AD=r;adminView(tab)}
+async function adm(a,d,tab){modal('<p class="text-center py-4">Menyimpan ke server...</p>');const r=await call(a,Object.assign({pass:PW},d||{}));closeModal();if(!r.ok){alert(r.msg||'Gagal menyimpan');return false}await refresh(tab);return true}
+function adminView(tab){
+ const h=AD.hasil,Qa=AD.soal;let c='';
+ if(tab==='rekap'){
+  c=`<div class="flex gap-2 mb-3"><button onclick="exportCSV()" class="px-3 py-2 rounded-lg btn-green text-sm">Unduh CSV</button>
+  <button onclick="if(confirm('Hapus semua hasil ujian? Semua siswa bisa mengerjakan ulang.'))adm('ahapus',{},'rekap')" class="px-3 py-2 rounded-lg bg-red-100 text-red-700 text-sm">Hapus semua</button></div>
+  <div class="overflow-x-auto"><table class="w-full text-sm"><thead class="${TH}"><tr><th class="p-2">Waktu</th><th>Nama</th><th>Kelas</th><th>Nilai</th><th>Benar</th><th>Salah</th><th>Pindah tab</th><th>Status</th></tr></thead><tbody>
+  ${h.map(r=>`<tr class="border-t ${r.status==='DIBLOKIR'?'bg-red-50 text-red-700':''}"><td class="p-2">${esc(r.waktu)}</td><td>${esc(r.nama)}</td><td>${esc(r.kelas)}</td><td class="font-semibold">${esc(r.nilai)}</td><td>${esc(r.benar)}</td><td>${esc(r.salah)}</td><td>${esc(r.viol)}x</td><td>${esc(r.status)}</td></tr>`).join('')||'<tr><td class="p-3 text-slate-500" colspan="8">Belum ada hasil.</td></tr>'}</tbody></table></div>`;
+ }else if(tab==='pelanggaran'){
+  const v=AD.viol.slice().sort((a,b)=>b.count-a.count);
+  c=`<p class="text-sm text-slate-600 mb-3">Siswa yang keluar halaman ujian. Pada ${CFG.maxViol}x pelanggaran akun otomatis diblokir.</p><div class="overflow-x-auto"><table class="w-full text-sm"><thead class="${TH}"><tr><th class="p-2">Nama</th><th>Pelanggaran</th><th>Status</th><th>Terakhir</th><th></th></tr></thead><tbody>
+  ${v.map(r=>`<tr class="border-t"><td class="p-2 font-medium">${esc(r.nama)}</td><td>${esc(r.count)}x keluar</td><td>${r.blocked?'<span class="text-red-600 font-semibold">DIBLOKIR</span>':'Aktif'}</td><td>${esc(r.waktu)}</td><td>${r.blocked?`<button onclick="unblock('${esc(r.key)}','${esc(r.nama)}')" class="px-2 py-1 rounded btn-gold text-xs">Buka blokir</button>`:''}</td></tr>`).join('')||'<tr><td class="p-3 text-slate-500" colspan="5">Belum ada pelanggaran.</td></tr>'}</tbody></table></div>`;
+ }else if(tab==='siswa'){
+  c=`<div class="grid sm:grid-cols-[1fr_1fr_auto_auto] gap-2 mb-4"><input id="sn" class="inp" placeholder="Nama lengkap"><input id="st" class="inp" placeholder="Token"><button onclick="rndTok()" class="px-3 rounded-lg bg-amber-100 text-sm">Acak</button><button onclick="addSiswa()" class="px-4 py-2 rounded-lg btn-green text-sm">Tambah</button></div>
+  <div class="overflow-x-auto"><table class="w-full text-sm"><thead class="${TH}"><tr><th class="p-2">Nama</th><th>Kelas</th><th>Token</th><th></th></tr></thead><tbody>${AD.siswa.map((s,i)=>`<tr class="border-t"><td class="p-2">${esc(s[0])}</td><td>${esc(s[1])}</td><td class="font-mono">${esc(s[2])}</td><td><button onclick="delSiswa(${i})" class="text-red-600 text-xs">Hapus</button></td></tr>`).join('')||'<tr><td class="p-3 text-slate-500" colspan="4">Belum ada siswa.</td></tr>'}</tbody></table></div>`;
+ }else{
+  c=`<div class="flex gap-2 mb-3"><button onclick="editView(-1)" class="px-3 py-2 rounded-lg btn-green text-sm">+ Tambah soal</button><button onclick="if(confirm('Kembalikan semua soal ke bawaan? Perubahanmu hilang.'))adm('areset',{},'soal')" class="px-3 py-2 rounded-lg bg-slate-100 text-sm">Reset ke soal bawaan</button></div>
+  <div class="text-sm">${Qa.map((q,i)=>`<div class="flex items-center gap-2 border-t py-2"><b class="w-7">${i+1}.</b><div class="flex-1 min-w-0"><div class="truncate">${esc(q.q)}</div><div class="text-xs text-slate-500">${sec(q)} · kunci: <span class="text-emerald-700 font-semibold">${q.t==='pg'?L[q.k]:q.t==='bs'?(q.k?'Benar':'Salah'):(q.g?'min. 2 poin':(q.k||[]).join(' / '))}</span> · bobot ${q.w||2}</div></div><button onclick="editView(${i})" class="text-emerald-700 text-xs">Edit</button><button onclick="delQ(${i})" class="text-red-600 text-xs">Hapus</button></div>`).join('')}</div>`;
+ }
+ adminShell(tab,c);
+}
+function rndTok(){$('#st').value='ECO'+Math.random().toString(36).slice(2,6).toUpperCase()}
+function addSiswa(){
+ const n=$('#sn').value.trim().replace(/\s+/g,' '),t=$('#st').value.trim().toUpperCase();
+ if(!n||!t){alert('Nama dan token wajib diisi');return}
+ if(AD.siswa.some(s=>norm(s[0])===norm(n))){alert('Nama sudah terdaftar');return}
+ if(AD.siswa.some(s=>String(s[2]).toUpperCase()===t)){alert('Token sudah dipakai siswa lain');return}
+ adm('asiswa',{siswa:AD.siswa.concat([[n,'X',t]])},'siswa');
+}
+function delSiswa(i){if(confirm('Hapus akun '+AD.siswa[i][0]+'?'))adm('asiswa',{siswa:AD.siswa.filter((_,j)=>j!==i)},'siswa')}
+function unblock(k,n){if(confirm('Buka blokir '+n+'? Hasil terblokirnya dihapus agar bisa mengulang.'))adm('aunblock',{key:k},'pelanggaran')}
+function exportCSV(){
+ const rows=[['Waktu','Nama','Kelas','Nilai','Benar','Salah','Pindah Tab','Status']].concat(AD.hasil.map(r=>[r.waktu,r.nama,r.kelas,r.nilai,r.benar,r.salah,r.viol,r.status]));
+ const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='rekap_nilai.csv';a.click();
+}
+function editView(idx){
+ const q=idx>=0?AD.soal[idx]:{t:'pg',q:'',o:['','','','',''],k:0,w:2};
+ const o=(q.o||[]).concat(['','','','','']).slice(0,5);
+ const sel=(id,opts,v,ex)=>`<select id="${id}" ${ex||''} class="inp">${opts.map(([val,t])=>`<option value="${val}" ${String(val)===String(v)?'selected':''}>${t}</option>`).join('')}</select>`;
+ const c=`<h3 class="ar text-xl font-bold text-emerald-800 mb-3">${idx>=0?'Edit soal no. '+(idx+1):'Tambah soal baru'}</h3>
+ <div class="grid sm:grid-cols-2 gap-3 mb-3"><div><label class="text-sm">Jenis soal</label>${sel('et',[['pg','Pilihan Ganda'],['is','Isian Singkat'],['bs','Benar / Salah']],q.t,'onchange="typeChg()"')}</div>
+ <div><label class="text-sm">Bobot</label><input id="ew" type="number" min="1" value="${q.w||2}" class="inp"></div></div>
+ <label class="text-sm">Teks soal</label><textarea id="eq" rows="3" class="inp mb-3">${esc(q.q)}</textarea>
+ <div id="bpg"><label class="text-sm">Pilihan jawaban</label>${o.map((x,j)=>`<div class="flex gap-2 items-center mb-2"><b class="w-5">${L[j]}</b><input id="eo${j}" class="inp" value="${esc(x)}"></div>`).join('')}
+ <label class="text-sm">Kunci jawaban</label>${sel('ek',L.split('').map((l,j)=>[j,l]),q.k)}</div>
+ <div id="bbs"><label class="text-sm">Kunci jawaban</label>${sel('eb',[['1','Benar'],['0','Salah']],q.k===true?'1':'0')}</div>
+ <div id="bis"><label class="text-sm">Kunci (kata kunci, pisahkan dengan koma)</label><input id="ei" class="inp" value="${q.t==='is'&&!q.g?esc((q.k||[]).join(', ')):''}" placeholder="contoh: biaya peluang, opportunity cost">${q.g?'<p class="text-xs text-slate-500 mt-1">Soal ini dinilai dengan 2 poin jawaban. Isi kolom ini untuk menggantinya dengan kata kunci biasa.</p>':''}</div>
+ <div class="flex gap-2 mt-4"><button onclick="adminView('soal')" class="flex-1 py-2 rounded-lg bg-slate-200">Batal</button><button onclick="saveQ(${idx})" class="flex-1 py-2 rounded-lg btn-green">Simpan</button></div>`;
+ adminShell('soal',c);typeChg();
+}
+function typeChg(){const t=$('#et').value;$('#bpg').style.display=t==='pg'?'':'none';$('#bbs').style.display=t==='bs'?'':'none';$('#bis').style.display=t==='is'?'':'none'}
+function saveQ(idx){
+ const t=$('#et').value,q=$('#eq').value.trim(),w=Math.max(1,+$('#ew').value||2);let it;
+ if(!q){alert('Teks soal wajib diisi');return}
+ if(t==='pg'){
+  const op=[0,1,2,3,4].map(j=>$('#eo'+j).value.trim());
+  if(op.filter(Boolean).length<2){alert('Isi minimal 2 pilihan');return}
+  const k=+$('#ek').value;if(!op[k]){alert('Kunci menunjuk pilihan yang kosong');return}
+  it={t,q,o:op,k,w};
+ }else if(t==='bs')it={t,q,k:$('#eb').value==='1',w};
+ else{
+  const ks=$('#ei').value.split(',').map(norm).filter(Boolean),old=idx>=0?AD.soal[idx]:null;
+  if(!ks.length&&!(old&&old.g)){alert('Isi minimal 1 kata kunci');return}
+  it=ks.length?{t,q,k:ks,w}:{t,q,k:[],g:old.g,w};
+ }
+ const a=AD.soal.slice();if(idx>=0)a[idx]=it;else a.push(it);
+ adm('asoal',{soal:a},'soal');
+}
+function delQ(i){if(confirm('Hapus soal no. '+(i+1)+'?'))adm('asoal',{soal:AD.soal.filter((_,j)=>j!==i)},'soal')}
+
+/* ===== ANTI-CURANG ===== */
+document.addEventListener('contextmenu',e=>e.preventDefault());
+['copy','cut','paste'].forEach(t=>document.addEventListener(t,e=>{if(S&&!S.done)e.preventDefault()}));
+document.addEventListener('keydown',e=>{
+ const k=e.key.toLowerCase();
+ if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j','c'].includes(k))||(e.ctrlKey&&['u','s','p'].includes(k)))e.preventDefault();
+});
+document.addEventListener('visibilitychange',()=>{
+ if(!S||S.done)return;
+ if(document.hidden){S.viol++;sv(SK,S);call('viol',{nama:S.nama,token:S.token,count:S.viol});return}
+ call('viol',{nama:S.nama,token:S.token,count:S.viol});
+ if(S.viol>=CFG.maxViol){submit(false,true);return}
+ drawNav();
+ modal(`<h3 class="ar font-bold text-xl text-red-600 mb-2">Pelanggaran Terdeteksi</h3><p class="text-sm mb-4">Kamu keluar dari halaman ujian. Ini pelanggaran ke-${S.viol} dari ${CFG.maxViol}. Pada pelanggaran ke-${CFG.maxViol} akunmu akan diblokir dan jawaban dikirim otomatis.</p><button onclick="closeModal()" class="w-full py-2 rounded-lg bg-red-600 text-white">Saya mengerti</button>`);
+});
+
+/* ===== PULIHKAN SESI ===== */
+(function(){
+ const o=ld(SK,null);
+ if(!o||!o.soal){loginView();return}
+ S=o;Q=o.soal;
+ if(o.viol>=CFG.maxViol){loginView();submit(false,true)}
+ else if(o.end<=Date.now()){loginView();submit(true)}
+ else examView();
+})();
+</script>
+</body></html>
